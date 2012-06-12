@@ -157,10 +157,14 @@ module Rack
 
         if redirect
           path = Rack::Utils.unescape(env['PATH_INFO'])
-          return [301, {'Location' => redirect}, []] if redirect && path !~ /^#{redirect}/
+          if path.include? "mobile" or path.include? "assets" or path.include? "images"
+            @app.call(env)
+          else
+            mod = redirect + path
+            return [301, {'Location' => mod}, []] # if mod && path !~ /^#{redirect}/
+          end 
         end
       end
-
       @app.call(env)
     end
 
