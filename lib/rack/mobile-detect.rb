@@ -157,7 +157,7 @@ module Rack
 
         if redirect
           path = Rack::Utils.unescape(env['PATH_INFO'])
-          if path.include? "mobile" or path.include? "assets" or path.include? "images"
+          if path.include? "mobile" or path.include? "assets" or path.include? "images" or path.include? "javascripts" or path.include? "stylesheets"
             @app.call(env)
           else
             mod = redirect + path
